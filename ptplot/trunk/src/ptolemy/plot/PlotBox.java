@@ -3773,6 +3773,9 @@ public class PlotBox extends JPanel implements Printable {
         // Find the exponent.
         double largest = Math.max(Math.abs(_xMin), Math.abs(_xMax));
         _xExp = (int) Math.floor(Math.log(largest) * _LOG10SCALE);
+        // BM: I want engineering notation, i.e. as exponent only a multiple of 3.
+        while (_xExp % 3 != 0)
+            _xExp--;
 
         // Use the exponent only if it's larger than 1 in magnitude.
         if ((_xExp > 1) || (_xExp < -1)) {
