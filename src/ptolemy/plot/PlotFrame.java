@@ -129,11 +129,14 @@ public class PlotFrame extends JFrame {
 
         // The Java look & feel is pretty lame, so we use the native
         // look and feel of the platform we are running on.
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            // Ignore exceptions, which only result in the wrong look and feel.
-        }
+
+        // BM: Removing this sillyness, it breaks the rest of the application.
+        
+        //try {
+        //    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        //} catch (Exception e) {
+        //    // Ignore exceptions, which only result in the wrong look and feel.
+        //}
 
         if (plotArg == null) {
             plot = new Plot();
