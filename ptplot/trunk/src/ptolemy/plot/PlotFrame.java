@@ -30,6 +30,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -116,7 +117,7 @@ public class PlotFrame extends JFrame {
     public PlotFrame(String title) {
         this(title, null);
     }
-
+    
     /** Construct a plot frame with the specified title and the specified
      *  instance of PlotBox.  After constructing this, it is necessary
      *  to call setVisible(true) to make the plot appear.
@@ -125,6 +126,18 @@ public class PlotFrame extends JFrame {
      *   an instance of Plot.
      */
     public PlotFrame(String title, PlotBox plotArg) {
+        this(title, plotArg, null);
+    }
+
+    /** Construct a plot frame with the specified title and the specified
+     *  instance of PlotBox.  After constructing this, it is necessary
+     *  to call setVisible(true) to make the plot appear.
+     *  @param title The title to put on the window.
+     *  @param plotArg the plot object to put in the frame, or null to create
+     *   an instance of Plot.
+     * @param boundingBox
+     */
+    public PlotFrame(String title, PlotBox plotArg, Rectangle boundingBox) {
         super(title);
 
         // The Java look & feel is pretty lame, so we use the native
@@ -215,15 +228,19 @@ public class PlotFrame extends JFrame {
 
         getContentPane().add(plot, BorderLayout.CENTER);
 
-        // FIXME: This should not be hardwired in here.
-        setSize(500, 300);
 
-        // Center.
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension frameSize = getSize();
-        int x = (screenSize.width - frameSize.width) / 2;
-        int y = (screenSize.height - frameSize.height) / 2;
-        setLocation(x, y);
+        Rectangle rectangle = boundingBox;
+        if (boundingBox == null) {
+            int width = 500;
+            int height = 300;
+
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (screenSize.width - width) / 2;
+            int y = (screenSize.height - height) / 2;
+            rectangle = new Rectangle(x, y, width, height);
+        }
+        setSize(rectangle.width, rectangle.height);
+        setLocation(rectangle.x, rectangle.y);
     }
 
     ///////////////////////////////////////////////////////////////////
